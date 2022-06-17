@@ -1,0 +1,82 @@
+var array, rolls, randomNumbers, totalOfAllDices, sum;
+
+function randomInt(n) {
+  // Return a random number from in [0, n[
+  return Math.floor(Math.random()*n);
+}
+
+function randomMember(arr) {
+  // Return a random member of the array
+  return arr[randomInt(arr.length)]
+}
+
+// Describe this function...
+function displayRoll() {
+  if(--window.LoopTrap <= 0) throw "Infinite loop.";
+  if (sum == 11) {
+    let element_info = document.getElementById('info');
+    element_info.innerText = 'You win';
+  } else if (sum < 11) {
+    let element_info2 = document.getElementById('info');
+    element_info2.innerText = 'Keep going';
+  } else {
+    let element_info3 = document.getElementById('info');
+    element_info3.innerText = 'You lost';
+  }
+}
+
+function getNumberOrString(value) {
+  // Convert a string value to a number if possible
+  let number_value = Number(value);
+  if (Number.isNaN(number_value)) {
+    return value
+  } else {
+    return number_value
+  }
+}
+
+
+rolls = [1, 2, 3, 4, 5, 6];
+totalOfAllDices = [];
+
+array;
+
+
+document.getElementById('button_roll').addEventListener('click', (event) => {
+  randomNumbers = [randomMember(rolls), randomMember(rolls), randomMember(rolls)];
+  totalOfAllDices.unshift(randomNumbers);
+  let element_list = document.getElementById('list');
+  element_list.innerText = randomNumbers;
+  let element_total = document.getElementById('total');
+  sum = randomNumbers.reduce((a,b) => a+b, 0);
+  element_total.innerText = sum;
+  displayRoll();
+
+});
+
+document.getElementById('button_restart').addEventListener('click', (event) => {
+  let element_total2 = document.getElementById('total');
+  element_total2.innerText = 0;
+  let element_info4 = document.getElementById('info');
+  element_info4.innerText = 'Start again!';
+  let element_list2 = document.getElementById('list');
+  element_list2.replaceChildren();
+
+});
+
+document.getElementById('button_remove').addEventListener('click', (event) => {
+  randomNumbers.pop();
+  let element_list3 = document.getElementById('list');
+  element_list3.innerText = randomNumbers;
+  let element_total3 = document.getElementById('total');
+  sum = randomNumbers.reduce((a,b) => a+b, 0);
+  element_total3.innerText = sum;
+  displayRoll();
+
+});
+
+document.getElementById('add-comment').addEventListener('click', (event) => {
+  let element_comment_text = document.getElementById('comment-text');
+  element_comment_text.innerText = getNumberOrString(document.getElementById('comment').value);
+
+});
